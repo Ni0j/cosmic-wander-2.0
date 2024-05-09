@@ -1,0 +1,249 @@
+html{
+  font-size:16px;
+  font-family: "haboro-serif", serif;
+  font-weight: 300;
+  font-style: normal;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  height: 100%;
+  margin: 0;
+  overflow: auto;
+  cursor: url('./assets/cursor1.png'), auto;
+}
+
+
+
+
+body{
+  font-size:1.6rem;
+  margin:0;
+  background: linear-gradient(180deg, #86A6A5 92.5%, #F2F2F2 100%);
+}
+
+main{
+  width:100vw;
+  overflow:wrap;
+}
+
+.menu{
+  display: inline-flex;
+flex-direction: column;
+align-items: flex-end;
+gap: 0.6875rem;
+position:fixed;
+z-index: 10000;
+top:1rem;
+left: 1rem;
+width: 4vw;
+transition: opacity 1s ease;
+}
+
+
+
+.icon{
+  width: 100%;
+height: 100%;
+cursor: pointer;
+}
+
+
+.book-cover{
+  display: flex;
+  display: flex;
+  height: 85vh;
+  margin: 3rem 15rem 0 0;
+  float: right;
+  width: 5vw;
+  padding: 0rem 11.4375rem;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-left: 9px solid #25646C;
+background: linear-gradient(270deg, #DAA9B2 91.5%, #886969 100%);
+box-shadow: 0px 24px 14.1px 0px rgba(0, 0, 0, 0.25);
+cursor: pointer;
+}
+
+.title-block{
+  display: flex;
+padding: 1.875rem;
+justify-content: center;
+align-items: center;
+gap: 1.875rem;
+/* border: 3px solid #EFF0F1; */
+color: #EFF0F1;
+color: #FFF;
+font-family: "Haboro Serif";
+font-size: 1.25rem;
+white-space: pre;
+font-style: italic;
+font-weight: 400;
+line-height: normal;
+}
+
+.book{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  margin-top: 6rem;
+}
+
+.left-block{
+  display: flex;
+  width: 22rem;
+  height: 30rem;
+  padding: 1.5rem 2.0rem;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 2rem 0.75rem;
+  flex-wrap: wrap;
+  border: 1.2px solid #25646C;
+  background: linear-gradient(90deg, #DAA9B2 91.5%, #886969 100%);
+  box-shadow: 0px 8px 4.7px 0px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+.right-block{
+  display: flex;
+  width: 23rem;
+  height: 30rem;
+  padding: 1.5rem 2.0rem;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 2rem 0.75rem;
+  flex-wrap: wrap;
+  border: 1.2px solid #25646C;
+  background: linear-gradient(269deg, #DAA9B2 91.5%, #886969 100%);
+  box-shadow: 0px 8px 4.7px 0px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.deco{
+    height: 1.125rem;
+    flex-shrink: 0;
+    color: rgba(239, 240, 241, 0.50);
+    text-align: center;
+    font-family: "Haboro Serif";
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+}
+
+.deco-icon {
+  position: absolute;
+}
+
+.date{
+  width: 32.925rem;
+  margin: 0;
+  height: 1rem;
+  flex-shrink: 0;
+  color: #EFF0F1;
+  font-family: "Haboro Serif";
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.index-content{
+  display: flex;
+width: 100%;
+align-items: flex-start;
+align-content: flex-start;
+gap: 0.6rem;
+flex-shrink: 0;
+flex-wrap: wrap;
+justify-content: space-around;
+}
+
+.index-content img{
+  width: 5.46rem;
+  height: 4.96rem;
+  flex-shrink: 0;
+}
+
+/* 弹框 */
+    .modal {
+      width: 20rem;
+      height: 32rem;
+      position: absolute;
+      top: 5rem;
+      right: 14rem;
+      background: #ddd;
+      border: 1px solid #ccc;
+      padding: 10px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, .5);
+    }
+    .modal::-webkit-scrollbar {
+      display: none;
+    }
+
+    .modal-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .modal-content {
+      padding: 10px;
+      position: absolute;
+      color: #405c60;
+      font-size: 1rem;
+      width: 19rem;
+    }
+
+    #detailUl {
+      width: 18rem;
+      height: 29rem;
+      overflow-y: auto;
+    }
+    li {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+    .detail-title {
+      font-size: 1.2rem;
+      font-weight: 900;
+      border-bottom: 1px solid #405c60;
+      width: 100%;
+    }
+    .close-icon {
+      cursor: pointer;
+      font-size: 1rem;
+      display: inline-block;
+    }
+
+    @media screen and (max-width: 768px) {
+      body {
+        transform: rotate(-90deg) translate(-50%, -50%);
+        transform-origin: top left;
+        width: 50vh;
+        height: 50vw;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /* margin-top: -vw;  */
+        margin-left: -20vh; 
+        scale: 70%;
+        background: linear-gradient(90deg, #86A6A5 92.5%, #F2F2F2 100%);
+      }
+
+      .menu{
+        display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.25rem;
+      position:fixed;
+      z-index: 10000;
+      top:1rem;
+      left: 1rem;
+      width: 10vw;
+      transition: opacity 1s ease;
+      margin-left: -40vh;       
+      }
+
+    }
+    
