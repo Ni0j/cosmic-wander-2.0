@@ -43,15 +43,45 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     
+    // 检测点击书外部，关闭书
+    var openBookShow = document.getElementById('openBookShow');
+    var leftBlock = document.getElementById('leftBlock');
+    var rightBlock = document.getElementById('rightBlock');
+    document.addEventListener('dblclick',  function (e) {
+        console.log(e,"-=--=e");
+        if (e.target !== leftBlock && e.target !== rightBlock && !openBookShow.contains(e.target) ) {
+            openBookShow.style.display = 'none'; // 关闭div
+            let bookShow = document.getElementById('bookShow')
+            bookShow.style.display = 'block'
+        }
+    });
+})
 
+/**
+ * 初始化书
+ */
+function initBook() {
+    let key = 'sb9he9Zvoc3hSM9nTOELsmLjplg7zhoOXlMPFpcU'
+    // const apiUrl = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=START_DATE&end_date=END_DATE&api_key=' + key
+    const apiUrl = 'https://api.nasa.gov/neo/rest/v1/feed?api_key=' + key
+    fetch(apiUrl)
+    .then((response) => {
+        if (response.status === 429) {
+            alert("You've refreshed enough times and reached the hours’ limit,  rest your eyes for a while and welcome back after an hour ᯓ ᡣ𐭩")
+        }
+        return response.json();
+    })
+    .then((data) => {
+    // })
 
-    fetch('../entry2/data.json')
-        .then((response) => response.json())
-        .then((data) => {
+    // fetch('../entry2/data.json')
+    //     .then((response) => response.json())
+    //     .then((data) => {
             let totalMagnitude = 0;
 
             // 已经捕获的星星图片
             oldImgList = localStorage.getItem('finishedList') ? JSON.parse(localStorage.getItem('finishedList')) : []
+            console.log(oldImgList, "-=-=oldImgList")
 
             for (const date in data.near_earth_objects) {
                 data.near_earth_objects[date].forEach(object => {
@@ -88,20 +118,9 @@ document.addEventListener("DOMContentLoaded", function () {
             allPage = parseInt(count / pageSize) + (count % pageSize > 0 ? 1 : 0)
             currentPageList = imageUrls.slice(0, pageSize)
         })
+}
 
-    // 检测点击书外部，关闭书
-    var openBookShow = document.getElementById('openBookShow');
-    var leftBlock = document.getElementById('leftBlock');
-    var rightBlock = document.getElementById('rightBlock');
-    document.addEventListener('dblclick',  function (e) {
-        console.log(e,"-=--=e");
-        if (e.target !== leftBlock && e.target !== rightBlock && !openBookShow.contains(e.target) ) {
-            openBookShow.style.display = 'none'; // 关闭div
-            let bookShow = document.getElementById('bookShow')
-            bookShow.style.display = 'block'
-        }
-    });
-})
+
 /**
  * 播放音乐
  * type: play-播放； pause-暂停
@@ -125,6 +144,7 @@ function music(type) {
  * 展示大书
  */
 function showBigBook(params) {
+    initBook()// 先初始化书
     let bookShow = document.getElementById('bookShow')
     let bookBigShow = document.getElementById('bookBigShow')
     bookShow.style.display = 'none'
@@ -248,16 +268,17 @@ function showStartList() {
             
 //   let audioElementBook = new Audio('./assets/book-clicked.wav');
 
-            divImg.addEventListener('click', () => {
+            divImg.addEventListener('click', (e) => {
+                e.stopPropagation();   //表示阻止向父元素冒泡
+                e.preventDefault()
                 let diglogName = document.getElementById('showDetail')
                 // audioElementBook.play();
                 // 暂未捕获要不要展示弹框， 如果不要，就把这部分加上
                  if (!oldImgList.find(val => val.id === item.id)) {
-                  alert('.ᐣ')
-                   diglogName.style.display = 'none'
-                  return
+                    alert('.ᐣ')
+                    diglogName.style.display = 'none'
+                    return
                 }
-
 
                 diglogName.style.display = 'block'
                 var myList = document.getElementById('detailUl');
@@ -309,7 +330,7 @@ document.addEventListener('drop', function (event) {
 
 });
 
-function closeDialog() {
+function closeDialogConmmon() {
     let diglogName = document.getElementById('showDetail')
     diglogName.style.display = 'none'
 }

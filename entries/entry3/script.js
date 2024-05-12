@@ -99,12 +99,12 @@ document.addEventListener("DOMContentLoaded", function(){
    });
 
 
-  fetch('data.json')
-   .then((response) => response.json())
-   .then((data) => {
-      console.log('Near Earth Object data:', data);
-      console.log('Total items:', data.element_count);
-   });
+//   fetch('data.json')
+//    .then((response) => response.json())
+//    .then((data) => {
+//       console.log('Near Earth Object data:', data);
+//       console.log('Total items:', data.element_count);
+//    });
 
    // 获取玩家姓名并且显示
    let userName = localStorage.getItem('userName')

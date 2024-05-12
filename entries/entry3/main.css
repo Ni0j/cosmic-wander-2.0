@@ -5,12 +5,16 @@ html{
   font-style: normal;
   box-sizing: border-box;
   width: 9999px;
-  height: 200vh;
+  height: 100vh;
   margin: 0;
 
   background-color:#EFF0F1;
   cursor: url('./assets/cursor1.png'), auto;
   overflow-x: auto;
+}
+
+::-webkit-scrollbar{
+  display: none;
 }
 
 @keyframes floatAnimationStar {

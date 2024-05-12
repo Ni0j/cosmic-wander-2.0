@@ -11,6 +11,7 @@ let usedFilters = [];
 
 
 document.addEventListener("DOMContentLoaded", function(){
+
   // // 菜单
   // let menuShow = document.getElementById('menuShow')
   // // 书
@@ -42,10 +43,26 @@ document.addEventListener("DOMContentLoaded", function(){
   //     bookShow.style.opacity = 0;
   //   }, 30000);
   // }
+  let key = 'sb9he9Zvoc3hSM9nTOELsmLjplg7zhoOXlMPFpcU'
+  let header = { mode: 'cors', 'Content-Type': 'application/json', 'Access-Control-Expose-Headers':'Content-Type,token'}
+  
+  const apiUrl = 'https://api.nasa.gov/neo/rest/v1/feed?api_key=' + key
+  fetch(apiUrl, { header: header, method: "get", cache: 'default' })
+  .then((response) => {
+    // 需要在服务器后端那里配置一下才能获取到
+    // 检查响应头中的X-RateLimit-Limit
+    // let rateLimitLimit = response.headers.get('X-RateLimit-Limit');
+    // // 检查响应头中的X-RateLimit-Remaining
+    // let rateLimitRemaining = response.headers.get('X-RateLimit-Remaining');
+    // console.log(response, "-=-=response")
+    // console.log(response.headers.get('X-Rate-Limit-Limit'), "-=-=rateLimitLimit")
+    // console.log(rateLimitRemaining, "-=-=rateLimitRemaining")
 
-  fetch('data.json')
-   .then((response) => response.json())
-   .then((data) => {
+    if (response.status === 429) {
+      alert("You've refreshed enough times and reached the hours’ limit,  rest your eyes for a while and welcome back after an hour ᯓ ᡣ𐭩")
+    }
+    return response.json();
+  }).then((data) => {
 
       let totalMagnitude = 0;
       let count = 0;
@@ -85,9 +102,9 @@ document.addEventListener("DOMContentLoaded", function(){
       }
 
       // 展示总共多少个小星星
-       document.getElementById('totalAmount').textContent = imageUrls.length
+      document.getElementById('totalAmount').textContent = imageUrls.length
 
-     imageUrls.forEach(item => {
+      imageUrls.forEach(item => {
 
       const image = new Image();
 
@@ -295,7 +312,12 @@ container.addEventListener('mouseup', () => {
 
 
 let lengthX, lengthY, oldX, oldY;
+let isKeydownSDAW = false
+let oldE
+var sh; 
+var setTimeFun;
 document.addEventListener('keydown', (e) => {
+  isKeydownSDAW = true
   let length = 50
   lengthX = 0;
   lengthY = 0;
@@ -315,14 +337,73 @@ document.addEventListener('keydown', (e) => {
       lengthY += length;
       break;
   }
+
+  if (e.key === 's' || e.key === 'd' || e.key === 'a' || e.key === 'w') {
+    setTimeFun = setTimeout(() => {
+      if (isKeydownSDAW) {
+        sh = setInterval(showEnter(e), 1500); 
+      } else {
+        try {
+          clearTimeout(setTimeFun)
+        } catch (error) {}
+        try {
+          clearInterval(sh)
+        } catch (error) {}
+      }
+    }, 1000)
+  }
 });
 
-document.addEventListener("keyup", () => {     //按键松开，小方块滑动
+
+
+
+function showEnter(e){
+  if (isKeydownSDAW) {
+    let length = 50
+    lengthX = 0;
+    lengthY = 0;
+    oldX = container.offsetLeft;
+    oldY = container.offsetTop;
+    switch (e.key) {
+      case "s":
+        lengthY -= length;
+        break;
+      case "d":
+        lengthX -= length;
+        break;
+      case "a":
+        lengthX += length;
+        break;
+      case "w":
+        lengthY += length;
+        break;
+    }
+    if (e.key === 's' || e.key === 'd' || e.key === 'a' || e.key === 'w') {
+      container.style.left = `${oldX + lengthX}px`;
+      container.style.top = `${oldY + lengthY}px`;
+    }
+  }
+} 
+
+
+document.addEventListener("keyup", (e) => {     //按键松开，小方块滑动
+  isKeydownSDAW = false
+  try {
+    clearTimeout(setTimeFun)
+  } catch (error) {}
+  try {
+    clearInterval(sh)
+  } catch (error) {}
+  
   container.style.left = `${oldX + lengthX}px`;
   container.style.top = `${oldY + lengthY}px`;
+  lengthX = 0;
+  lengthY = 0;
+  oldX = container.offsetLeft;
+  oldY = container.offsetTop;
 })
 
-
+//这里可以改成按住就一直移动吗 松开停下
 
 container.addEventListener('touchstart', (e) => {
   isDragging = true;
@@ -345,14 +426,11 @@ container.addEventListener('touchend', () => {
 });
 
 
-
-
-
 // 关闭弹框
-// function closeDialog() {
-//   let showDetail = document.getElementById("windowShow")
-//   showDetail.style.display = 'none'
-// }
+function closeDialog() {
+  let showDetail = document.getElementById("windowShow")
+  showDetail.style.display = 'none'
+}
 // 弹窗出现后5秒自动关闭
 function autoCloseWindow() {
   let showDetail = document.getElementById("windowShow");
