@@ -188,3 +188,25 @@ li {
     font-size: 1rem;
     display: inline-block;
 }
+
+
+@media screen and (max-width: 768px) {
+    .book-icon {
+        width: 10vw;
+        cursor: pointer;
+        z-index: 10000;
+        position: fixed;
+        bottom: 1rem;
+        left: 0.5rem;
+        rotate: 30deg;
+    }
+
+    .book {
+        display: none;
+        cursor: pointer;
+        z-index: 10000;
+        position: fixed;
+        bottom: 1%;
+        left: 21%;
+    }
+}
