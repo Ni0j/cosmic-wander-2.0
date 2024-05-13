@@ -209,4 +209,15 @@ li {
         bottom: 1%;
         left: 21%;
     }
+
+    .book-icon-big {
+        display: none;
+        cursor: pointer;
+        z-index: 10000;
+        position: fixed;
+        bottom: 1%;
+        left: 0.5rem;
+        animation: moveToCenter 2s forwards;
+    }
+
 }
