@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var leftBlock = document.getElementById('leftBlock');
     var rightBlock = document.getElementById('rightBlock');
     document.addEventListener('dblclick',  function (e) {
-        console.log(e,"-=--=e");
         if (e.target !== leftBlock && e.target !== rightBlock && !openBookShow.contains(e.target) ) {
             openBookShow.style.display = 'none'; // 关闭div
             let bookShow = document.getElementById('bookShow')
@@ -61,6 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
  * 初始化书
  */
 function initBook() {
+    currentPage = 1; // 初始化分页
+    allPage = 0; // 初始化分页
+    if (imageUrls && imageUrls.length > 0) {
+        allPage = parseInt(count / pageSize) + (count % pageSize > 0 ? 1 : 0)
+        currentPageList = imageUrls.slice(0, pageSize)
+        return
+    }
     let key = 'sb9he9Zvoc3hSM9nTOELsmLjplg7zhoOXlMPFpcU'
     // const apiUrl = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=START_DATE&end_date=END_DATE&api_key=' + key
     const apiUrl = 'https://api.nasa.gov/neo/rest/v1/feed?api_key=' + key
@@ -72,17 +78,19 @@ function initBook() {
         return response.json();
     })
     .then((data) => {
-    // })
+        getBookList(data)
+    })
+}
 
-    // fetch('../entry2/data.json')
-    //     .then((response) => response.json())
-    //     .then((data) => {
-            let totalMagnitude = 0;
+/**
+ * 根据是否有值初始化书中的数据
+ */
+
+function getBookList(data) {
+    let totalMagnitude = 0;
 
             // 已经捕获的星星图片
             oldImgList = localStorage.getItem('finishedList') ? JSON.parse(localStorage.getItem('finishedList')) : []
-            console.log(oldImgList, "-=-=oldImgList")
-
             for (const date in data.near_earth_objects) {
                 data.near_earth_objects[date].forEach(object => {
                     if (object.absolute_magnitude_h !== undefined) {
@@ -113,11 +121,9 @@ function initBook() {
             if (document.getElementById('timeDate')) {
                 document.getElementById('timeDate').textContent = startDate + ' - ' + endDate
             }
-            
             // 计算分页
             allPage = parseInt(count / pageSize) + (count % pageSize > 0 ? 1 : 0)
             currentPageList = imageUrls.slice(0, pageSize)
-        })
 }
 
 
@@ -155,6 +161,10 @@ function showBigBook(params) {
  * 打开书
  */
 function openBook() {
+    if (!imageUrls || imageUrls.length === 0) {
+        // 如果初始化书还没成功，就不让点开
+        return
+    }
     document.getElementById("bookBigShow").style.display = 'none'
     document.getElementById("openBookShow").style.display = 'inline-flex'
     if (count > 0) {
@@ -174,6 +184,7 @@ function prePage() {
         alert("already one page")
         return
     }
+    currentPageList = []
     currentPage--
     if (currentPage >= allPage && count % pageSize > 0) {
         currentPageList = imageUrls.slice(count - (count % pageSize + 1), count - 1)
@@ -188,6 +199,7 @@ function nextPage() {
         alert("no more")
         return
     }
+    currentPageList = []
     currentPage++
     if (currentPage >= allPage && count % pageSize > 0) {
         currentPageList = imageUrls.slice(count - (count % pageSize + 1), count - 1)
@@ -200,8 +212,8 @@ function nextPage() {
 // 展示当前页星星
 function showStartList() {
     for (let index = 1; index < 19; index++) {
-        let divImg = document.getElementById("imgDiv" + index)
-        divImg.innerHTML = ''
+        let divImg1 = document.getElementById("imgDiv" + index)
+        divImg1.innerHTML = ''
     }
     currentPageList.forEach((item, index) => {
         // let imgName = document.getElementById("imgItem" + (index + 1))
@@ -218,7 +230,9 @@ function showStartList() {
 
                     divImg.innerHTML = ''
                     const canvas = document.createElement('canvas');
-                    divImg.appendChild(canvas);
+                    const divCanvasParent = document.createElement('div');
+                    divCanvasParent.appendChild(canvas)
+                    divImg.appendChild(divCanvasParent);
                     const divHtml = document.createElement('div');
                     divHtml.textContent = 'id:' + item.id
                     divHtml.style.color = '#FFFFFF'
@@ -245,8 +259,10 @@ function showStartList() {
                     const randomTop = Math.random() * (window.innerHeight * 4 - canvas.height);
                     canvas.style.left = `${randomLeft}px`;
                     canvas.style.top = `${randomTop}px`;
+         
+                    clickItem(divImg, item)
                 }
-                image.src = item.imageUrl;
+                image.src = oldImgList.find(val => val.id === item.id).imageUrl;
 
 
             } else {
@@ -263,43 +279,46 @@ function showStartList() {
                 divHtml.style.textAlign = 'center'
                 divHtml.style.fontSize = '1rem'
                 divImg.appendChild(divHtml);
-
+                clickItem(divImg, item)
             }
             
 //   let audioElementBook = new Audio('./assets/book-clicked.wav');
-
-            divImg.addEventListener('click', (e) => {
-                e.stopPropagation();   //表示阻止向父元素冒泡
-                e.preventDefault()
-                let diglogName = document.getElementById('showDetail')
-                // audioElementBook.play();
-                // 暂未捕获要不要展示弹框， 如果不要，就把这部分加上
-                 if (!oldImgList.find(val => val.id === item.id)) {
-                    alert('.ᐣ')
-                    diglogName.style.display = 'none'
-                    return
-                }
-
-                diglogName.style.display = 'block'
-                var myList = document.getElementById('detailUl');
-                myList.innerHTML = ""
-                for (ul in item) {
-                    if (ul !== 'imageUrl') {
-                        let content = ul + ":" + JSON.stringify(item[ul])
-                        let listString = `<li>${content}</li>`
-
-                        var tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = listString;
-                        // 获取新div中的所有子节点，并将它们追加到ul元素中
-                        while (tempDiv.firstChild) {
-                            myList.appendChild(tempDiv.firstChild);
-                        }
-                    }
-
-                }
-            })
         }
     });
+}
+
+function clickItem(divImg, item) {
+    if (divImg.children.length > 0) {
+        divImg.children[0].addEventListener('click', (e) => {
+            let diglogName = document.getElementById('showDetail')
+            // audioElementBook.play();
+            // 暂未捕获要不要展示弹框， 如果不要，就把这部分加上
+
+            if (!oldImgList.find(valOld => valOld.id === item.id)) {
+                alert('.ᐣ')
+                diglogName.style.display = 'none'
+                return
+            }
+
+            diglogName.style.display = 'block'
+            var myList = document.getElementById('detailUl');
+            myList.innerHTML = ""
+            for (ul in item) {
+                if (ul !== 'imageUrl' && ul !== 'links') {
+                    let content = ul + ":" + JSON.stringify(item[ul])
+                    let listString = `<li>${content}</li>`
+
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = listString;
+                    // 获取新div中的所有子节点，并将它们追加到ul元素中
+                    while (tempDiv.firstChild) {
+                        myList.appendChild(tempDiv.firstChild);
+                    }
+                }
+
+            }
+        })
+    }
 }
 
 // 可拖动弹框

@@ -147,13 +147,13 @@
         
         
         <!-- 详情 -->
-        <div class="modal" draggable="true" id="showDetail" style="display: none; cursor: move;" ondragstart="dragStart(event)">
+        <div class="modal" draggable="true" id="showDetail" style="display: none;" ondragstart="dragStart(event)">
           <div class="modal-content">
-            <div class="detail-title">
+            <div class="detail-title" id="dmTitle" style="cursor: move;">
               <div onclick="closeDialogConmmon()" class="close-icon">●</div>
               note
             </div>
-            <ul style="padding-left: 1.5rem;" id="detailUl">
+            <ul style="padding-left: 1.5rem; cursor: text;" id="detailUl">
             </ul>
           </div>
         </div>
