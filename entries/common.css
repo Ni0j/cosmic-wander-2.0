@@ -206,7 +206,7 @@ li {
         cursor: pointer;
         z-index: 10000;
         position: fixed;
-        transform: translate(-50%, 0%);
+        transform: translate(-38%, 0%);
     }
 
     .book-icon-big {
