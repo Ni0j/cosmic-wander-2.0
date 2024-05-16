@@ -28,10 +28,10 @@
       </div>
       <div class="aster-container"></div>
       <!-- </div> -->
-      <!-- 以下为弹窗但我不熟悉弹窗具体怎么写所以仅作框架参考-->
+      <!-- 弹窗-->
       <div class="window" id="windowShow" style="display: none;">
         <div class="header">
-          <div class="dot"  onClick="closeDialog()" style="cursor: pointer; color: #25646C;">-</div>
+          <div class="dot"  onClick="closeDialog()" style="cursor: pointer; color: #25646C;">●</div>
           <div class="info-title">
             <p class="info">Info</p>
           </div>
@@ -39,24 +39,23 @@
         <div class="content">
           
           <div id="textContent" class="text-content">
-            <!-- content就是从api里抓到的objec的id； name；id点击后跳转到这个object对应的url（也在api里——-->
+            <!-- content-->
             <div class="text-id-name" id="textId"></div><br><br>
             <div class="text-id-name" id="textName"></div>
           </div>
           <div class="img-content">
-            <!-- 显示鼠标双击的（也就是捕获）的小行星的图片（对应canvas）—-->
-            <!-- <img id="detailImg" src="./assets/aster-test5.png"> -->
+            
             <div id="detailImg"></div>
          </div>
         </div>
       </div>
 
- <!-- 这部分为彩蛋，隐藏文本，点击后会记住点击过，总共有7个，检测到点击完全部7个后(不计顺序），所有entry1-3的左侧menu多出一个名为egg-icon.png-->
+ <!-- Eggs-->
     <div class="float-text four" onClick="clickEgg('four')">“They were looking at the negative of the universe.”</div>
     <div class="float-text five" onClick="clickEgg('five')">"The Earth is round. If you walk forward from any point on its surface, you will eventually return to the starting point...</div>
     <div class="float-text six" onClick="clickEgg('six')">It's quite similar. As we delved deeper into the microcosm, we reached the end of the microcosm, and thus returned to the entire macrocosm.</div>
 
- <!-- 菜单，初始显示，隔30后没有触碰就渐隐消失，然后再次hover后再出现，然后重复-->
+ <!-- MENU-->
     <div class="menu" id="menuShow">
       <div class="back">
         <a href="../index.html"><img src="./assets/home-icon.png" class="icon"></a>
@@ -68,7 +67,7 @@
       <div class="index">
         <a href="../entry3/index.html"><img src="./assets/collect-icon.png" class="icon"></a>
       </div>
-      <!-- 下面这个div改为音乐的图标，初始显示没有音乐，点击后切换图标到（music-icon.png）并播放bgm一直单曲循环，对应音乐文件：map-bgm.wav(没有放到html里)再次点击暂停当前音乐，并记录暂停位置，图标切换为没有音乐，再次点击继续从上次暂停的地方播放，图标也切换-->
+      
       <div>
         <div id="musicPlay" onclick="music('play')"><img src="./assets/music-no-icon.png" class="icon"></div>
         <div id="musicPause" style="display: none;" onclick="music('pause')"><img src="./assets/music-icon.png" class="icon">
@@ -91,8 +90,8 @@
         </div>
 
 
-        <!-- 图书--start -->
-        <!-- 书的图标css和菜单的其他图标一样！消失的机制也一样。区别是额外加了旋转30度，但是位置在页面左下角-->
+        <!-- BOOK--start -->
+       
         <div class="book-icon" id="bookShow">
           <div onClick="showBigBook()"><img src="./assets/book-icon.png" class="icon"></div>
         </div>
@@ -146,7 +145,7 @@
         </div>
         
         
-        <!-- 详情 -->
+        <!-- INFO -->
         <div class="modal" draggable="true" id="showDetail" style="display: none;" ondragstart="dragStart(event)">
           <div class="modal-content">
             <div class="detail-title" id="dmTitle" style="cursor: move;">
@@ -157,9 +156,9 @@
             </ul>
           </div>
         </div>
-        <!-- 图书--end -->
+        <!-- BOOK--end -->
 
-          <!-- 0509更新：双击捕获星星带音效：entries/entry1/assets/doubleclicked-sfx.ogg-->
+        
 
     </main>
   

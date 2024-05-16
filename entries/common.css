@@ -220,4 +220,19 @@ li {
         animation: moveToCenter 2s forwards;
     }
 
+    .book-icon-big {
+        display: none;
+        cursor: pointer;
+        z-index: 10000;
+        position: fixed;
+        bottom: 1rem;
+        left: 0.5rem;
+        animation: moveToCenter 2s forwards;
+    }
+
+    .book-icon-big img {
+        width: 80vw;
+        height: 100%;
+    }
+
 }
