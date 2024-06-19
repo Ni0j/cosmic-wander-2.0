@@ -9,25 +9,9 @@ let imageUrls = [];
 let startDate = ""
 let endDate = ""
 document.addEventListener("DOMContentLoaded", function () {
-    // 菜单
-    let menuShow = document.getElementById('menuShow')
     // 书
     let bookShow = document.getElementById('bookShow')
     if (bookShow) {
-        menuShow.style.opacity = 1;
-        setTimeout(() => {
-            menuShow.style.opacity = 0;
-        }, 30000);
-        // 鼠标移入事件
-        menuShow.onmouseover = function () {
-            menuShow.style.opacity = 1;
-            bookShow.style.opacity = 1;
-            setTimeout(() => {
-                menuShow.style.opacity = 0;
-                bookShow.style.opacity = 0;
-            }, 30000);
-        }
-
         bookShow.style.opacity = 1;
         setTimeout(() => {
             bookShow.style.opacity = 0;
@@ -124,26 +108,6 @@ function getBookList(data) {
             // 计算分页
             allPage = parseInt(count / pageSize) + (count % pageSize > 0 ? 1 : 0)
             currentPageList = imageUrls.slice(0, pageSize)
-}
-
-
-/**
- * 播放音乐
- * type: play-播放； pause-暂停
- */
-function music(type) {
-    let music = document.getElementById("bgMusic");
-    let musicPlay = document.getElementById("musicPlay");
-    let musicPause = document.getElementById("musicPause");
-    if (type === 'play') {
-        music.play()
-        musicPlay.style.display = 'none'
-        musicPause.style.display = 'block'
-    } else {
-        music.pause()
-        musicPlay.style.display = 'block'
-        musicPause.style.display = 'none'
-    }
 }
 
 /**
@@ -288,6 +252,34 @@ function showStartList() {
 }
 
 function clickItem(divImg, item) {
+    const dragModal = (modalHeader, modal) => {
+        let isDragging = false;
+        let initialClickPosition;
+        let initialModalPosition;
+       
+        modalHeader.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          initialClickPosition = { x: e.clientX, y: e.clientY };
+          initialModalPosition = { x: modal.offsetLeft, y: modal.offsetTop };
+        });
+       
+        document.addEventListener('mouseup', () => {
+          isDragging = false;
+        });
+       
+        document.addEventListener('mousemove', (e) => {
+          if (isDragging) {
+            const dx = e.clientX - initialClickPosition.x;
+            const dy = e.clientY - initialClickPosition.y;
+            modal.style.left = initialModalPosition.x + dx + 'px';
+            modal.style.top = initialModalPosition.y + dy + 'px';
+          }
+        });
+      };
+       
+      const modalHeader = document.getElementById('modalHeader');
+      const modal = document.querySelector('.modal');
+      dragModal(modalHeader, modal);
     if (divImg.children.length > 0) {
         divImg.children[0].addEventListener('click', (e) => {
             let diglogName = document.getElementById('showDetail')
@@ -299,7 +291,6 @@ function clickItem(divImg, item) {
                 diglogName.style.display = 'none'
                 return
             }
-
             diglogName.style.display = 'block'
             var myList = document.getElementById('detailUl');
             myList.innerHTML = ""
@@ -322,37 +313,38 @@ function clickItem(divImg, item) {
 }
 
 // 可拖动弹框
-function dragStart(event) {
-    var style = window.getComputedStyle(event.target, null);
-    event.dataTransfer.setData("text/plain",
-        (parseInt(style.getPropertyValue("left"), 10) - event.clientX) + ',' +
-        (parseInt(style.getPropertyValue("top"), 10) - event.clientY));
-}
+// function dragStart(event) {
+//     var style = window.getComputedStyle(event.target, null);
+//     event.dataTransfer.setData("text/plain",
+//         (parseInt(style.getPropertyValue("left"), 10) - event.clientX) + ',' +
+//         (parseInt(style.getPropertyValue("top"), 10) - event.clientY));
+// }
 
-document.addEventListener('dragover', function (event) {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
-});
+// document.addEventListener('dragover', function (event) {
+//     event.preventDefault();
+//     event.dataTransfer.dropEffect = 'move';
+// });
 
-document.addEventListener('drop', function (event) {
-    event.preventDefault();
-    var offset = event.dataTransfer.getData("text/plain").split(',');
-    var dm = event.target.closest('.modal');
-    if (dm) {
-        dm.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
-        dm.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
-    } else {
-        let showDetail = document.getElementById('showDetail')
-        showDetail.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
-        showDetail.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
-    }
+// document.addEventListener('drop', function (event) {
+//     event.preventDefault();
+//     var offset = event.dataTransfer.getData("text/plain").split(',');
+//     var dm = event.target.closest('.modal');
+//     if (dm) {
+//         dm.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
+//         dm.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
+//     } else {
+//         let showDetail = document.getElementById('showDetail')
+//         showDetail.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
+//         showDetail.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
+//     }
 
-});
+// });
 
 function closeDialogConmmon() {
     let diglogName = document.getElementById('showDetail')
     diglogName.style.display = 'none'
 }
+
 //暂时改的
 function autoCloseWindow() {
     let showDetail = document.getElementById("windowShow");

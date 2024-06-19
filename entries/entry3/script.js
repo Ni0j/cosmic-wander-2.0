@@ -8,6 +8,15 @@ let finishedList = []
 //小行星会随机自由移动，和dvd屏保同理，但是移动速度根据小行星对应的velocity（api数值）
 
 document.addEventListener("DOMContentLoaded", function(){
+   window.addEventListener('message', function(event) {
+      if (event.data.action === 'callMethod3') {
+        // 调用你想要的方法
+        initDataPage3()
+      }
+    });
+})
+
+function initDataPage3() {
    // 菜单
    let menuShow = document.getElementById('menuShow')
    menuShow.style.opacity = 1;
@@ -115,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function(){
    if (eggListOld.length === 7) {
       document.getElementById('showEgg').style.display = 'block'
    }
-})
+}
 
 function roundToTwo(num) {
    return Math.round((num + Number.EPSILON) * 100) / 100;

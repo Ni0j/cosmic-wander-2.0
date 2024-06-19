@@ -309,25 +309,127 @@ input:focus {
   }
 }
 
+/* 转场动画 */
+.loading {
+    position: fixed;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+/* 首页 */
+.show-main-page {
+  width: 100vw;
+  height: 100vh;
+}
+.main-page-big {
+  animation: loadingBig 4s ease-in-out forwards;
+}
+.main-page-small {
+  animation: loadingSmall 4s ease-in-out forwards;
+}
+
+@keyframes loadingBig {
+  0% {
+    /* transform: translateX(-30%) translateY(-45%) scale(2); */
+    transform: scale(1);
+    /* opacity: 1; */
+  }
+
+  100% {
+    /* transform: translateX(-30%) translateY(-45%) scale(4); */
+    transform: scale(4);
+    /* opacity: 0.4; */
+  }
+}
+
+@keyframes loadingSmall {
+  0% {
+    transform: scale(4);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
 
 /* 第一个页面嵌套样式*/
 .hidden-page1 {
   width: 0;
   height: 0;
 }
-.show-page1 {
-  width: 100vw;
+.page1 {
+  position: fixed;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100vh;
-  animation: zoomIn 2s ease-in-out forwards;
+}
+.show-page1 {
+  animation: zoomIn1 2s ease-in-out forwards;
   /* animation-fill-mode: forwards; */
 }
 
-@keyframes zoomIn {
-  0% {
-    transform: scale(0);
-  }
+.hidden-page1 {
+  animation: zoomOut1 2.5s ease-in-out forwards;
+  /* animation-fill-mode: forwards; */
+}
 
+@keyframes zoomIn1 {
+  0% {
+    /* transform: scale(0); */
+    /* opacity: 0.2; */
+    clip-path: circle(0 at 30% 45%);
+  }
+  99% {
+    /* transform: scale(1);
+    opacity: 1; */
+    clip-path: circle(120% at 30% 45%);
+  }
   100% {
-    transform: scale(1);
+    /* transform: scale(1);
+    opacity: 1; */
+    clip-path: 0;
+  }
+}
+
+.show-page3 {
+  animation: zoomIn3 2s ease-in-out forwards;
+}
+
+.hidden-page3 {
+  animation: zoomOut3 2.5s ease-in-out forwards;
+}
+
+@keyframes zoomOut1 {
+  0% {
+    clip-path: circle(100% at 30% 45%);
+  }
+  100% {
+    clip-path: circle(0 at 30% 45%);
+  }
+}
+
+@keyframes zoomIn3 {
+  0% {
+    clip-path: circle(0 at 60% 55%);
+  }
+  99% {
+    clip-path: circle(120% at 60% 55%);
+  }
+  100% {
+    clip-path: 0;
+  }
+}
+
+@keyframes zoomOut3 {
+  0% {
+    clip-path: circle(100% at 60% 55%);
+  }
+  100% {
+    clip-path: circle(0 at 60% 55%);
   }
 }

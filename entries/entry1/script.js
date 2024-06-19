@@ -1,6 +1,7 @@
 // const APIKEY = 'eAo7j1T8mqTJWpsugD5i9W99K6cF28SApCrsBu7U';
 const container = document.querySelector('.container');
 let usedFilters = [];
+let isAlready = false
 
 //没写但是需要的功能：
 //1. canvas（也就是小行星图片）的width等比object的diameter 用km（api中的数值）
@@ -9,60 +10,33 @@ let usedFilters = [];
 //0509更新：
 //
 
-
 document.addEventListener("DOMContentLoaded", function(){
-
-  // // 菜单
-  // let menuShow = document.getElementById('menuShow')
-  // // 书
-  // let bookShow = document.getElementById('bookShow')
-  // menuShow.style.opacity = 1;
-  // setTimeout(() => {
-  //   menuShow.style.opacity = 0;
-  // }, 30000);
-  // // 鼠标移入事件
-  // menuShow.onmouseover = function () {
-  //   menuShow.style.opacity = 1;
-  //   bookShow.style.opacity = 1;
-  //   setTimeout(() => {
-  //     menuShow.style.opacity = 0;
-  //     bookShow.style.opacity = 0;
-  //   }, 30000);
-  // }
- 
-  // bookShow.style.opacity = 1;
-  // setTimeout(() => {
-  //   bookShow.style.opacity = 0;
-  // }, 30000);
-  // // 鼠标移入事件
-  // bookShow.onmouseover = function () {
-  //   menuShow.style.opacity = 1;
-  //   bookShow.style.opacity = 1;
-  //   setTimeout(() => {
-  //     menuShow.style.opacity = 0;
-  //     bookShow.style.opacity = 0;
-  //   }, 30000);
-  // }
-  let key = 'sb9he9Zvoc3hSM9nTOELsmLjplg7zhoOXlMPFpcU'
-  let header = { mode: 'cors', 'Content-Type': 'application/json', 'Access-Control-Expose-Headers':'Content-Type,token'}
-  
-  const apiUrl = 'https://api.nasa.gov/neo/rest/v1/feed?api_key=' + key
-  fetch(apiUrl, { header: header, method: "get", cache: 'default' })
-  .then((response) => {
-    // 需要在服务器后端那里配置一下才能获取到
-    // 检查响应头中的X-RateLimit-Limit
-    // let rateLimitLimit = response.headers.get('X-RateLimit-Limit');
-    // // 检查响应头中的X-RateLimit-Remaining
-    // let rateLimitRemaining = response.headers.get('X-RateLimit-Remaining');
-    // console.log(response, "-=-=response")
-    // console.log(response.headers.get('X-Rate-Limit-Limit'), "-=-=rateLimitLimit")
-    // console.log(rateLimitRemaining, "-=-=rateLimitRemaining")
-
-    if (response.status === 429) {
-      alert("You've refreshed enough times and reached the hours’ limit,  rest your eyes for a while and welcome back after an hour ᯓ ᡣ𐭩")
+  // initDataPage1()
+  window.addEventListener('message', function(event) {
+    if (event.data.action === 'callMethod1') {
+      // 调用你想要的方法
+      initDataPage1()
     }
-    return response.json();
-  }).then((data) => {
+  });
+})
+
+function refreshStar() {
+  initDataPage1()
+}
+ 
+  function initDataPage1() {
+    container.innerHTML = '<div id="imageContainer" class="image-container"></div>'
+    let key = 'sb9he9Zvoc3hSM9nTOELsmLjplg7zhoOXlMPFpcU'
+    let header = { mode: 'cors', 'Content-Type': 'application/json', 'Access-Control-Expose-Headers':'Content-Type,token'}
+    
+    const apiUrl = 'https://api.nasa.gov/neo/rest/v1/feed?api_key=' + key
+    fetch(apiUrl, { header: header, method: "get", cache: 'default' })
+    .then((response) => {
+      if (response.status === 429) {
+        alert("You've refreshed enough times and reached the hours’ limit,  rest your eyes for a while and welcome back after an hour ᯓ ᡣ𐭩")
+      }
+      return response.json();
+    }).then((data) => {
 
       let totalMagnitude = 0;
       let count = 0;
@@ -109,7 +83,16 @@ document.addEventListener("DOMContentLoaded", function(){
       const image = new Image();
 
       image.onload = function() {
-        let width = roundToTwo(item.estimated_diameter.kilometers.estimated_diameter_min * 40) + 'rem'
+        let width = roundToTwo(item.estimated_diameter.kilometers.estimated_diameter_min * 40)
+        if (width > 30 && width < 60) {
+          width = (width / 2) + 'rem'
+        } else if  (width >= 60 && width < 120) {
+          width = (width / 3) + 'rem'
+        } else if (width >= 120) {
+          width = 53 + 'rem'
+        } else {
+          width = width + 'rem'
+        }
         image.style.position = 'absolute';
         image.style.zIndex = 999;
         image.width = 100;
@@ -257,7 +240,8 @@ document.addEventListener("DOMContentLoaded", function(){
   if (eggListOld.length === 7) {
     document.getElementById('showEgg').style.display = 'block'
   }
-})
+
+  }
 
 function roundToTwo(num) {
   return Math.round((num + Number.EPSILON) * 100) / 100;

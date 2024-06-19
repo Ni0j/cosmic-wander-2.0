@@ -13,6 +13,7 @@ html{
   overflow-x: auto;
 }
 
+/* 没懂这个加上是想隐藏整个页面的滚动条吗？加了之后就没办法看滑走的星星了 */
 ::-webkit-scrollbar{
   display: none;
 }
@@ -149,29 +150,5 @@ mix-blend-mode: exclusion;
   width: 10vw;
   transition: opacity 1s ease;
   }
-
-  .window{
-    position: fixed;
-    height: 36vh;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex-shrink: 0;
-    border: 2px solid #DAA9B2;
-    background: #EFF0F1;
-    box-shadow: 2px 2px 26px 0px #DAA9B2;
-    z-index: 2000;
-  }
-
-
-.background video {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  object-fit: cover;
-}
 
 }

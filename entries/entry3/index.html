@@ -18,54 +18,58 @@
 
 <body>
     <main>
-      <div class="background" id="background">
-        <video src="./assets/bgvideo.mp4" autoplay muted loop></video>
+      <div style="width: 100%; overflow: auto;">
+        <div class="background" id="background">
+          <video src="./assets/bgvideo.mp4" autoplay muted loop></video>
+        </div>
       </div>
+     
 
-  
+  <!-- 这一页用于展示捕获到的小行星的图片-->
 
     
     <div class="float-text seven" onClick="clickEgg('seven')">“They were looking at the negative of the universe.”</div>
 
-
-    <div class="menu" id="menuShow">
-      <div class="back">
+    <!-- 菜单，初始显示，隔30后没有触碰就渐隐消失，然后再次hover后再出现，然后重复-->
+    <div class="menu" id="menuShow" style=" top: 40%;">
+      <!-- <div class="back">
         <a href="../index.html"><img src="./assets/home-icon.png" class="icon"></a>
       </div>
       <div class="map">
         <a href="../entry1/index.html"><img src="./assets/map-icon.png" class="icon"></a>
       </div>
-      <div class="collect">
+      
+      <div class="index">
         <a href="../entry3/index.html"><img src="./assets/collect-icon.png" class="icon"></a>
-      </div>
-
-      <div>
+      </div> -->
+      <!-- 下面这个div改为音乐的图标，初始显示没有音乐，点击后切换图标到（music-icon.png）并播放bgm一直单曲循环，对应音乐文件：map-bgm.wav(没有放到html里)再次点击暂停当前音乐，并记录暂停位置，图标切换为没有音乐，再次点击继续从上次暂停的地方播放，图标也切换-->
+      <!-- <div>
         <div id="musicPlay" onclick="music('play')"><img src="./assets/music-no-icon.png" class="icon"></div>
-        <div id="musicPause" style="display: none;" onclick="music('pause')"><img src="../assets/music-icon.png" class="icon">
+        <div id="musicPause" style="display: none;" onclick="music('pause')"><img src="./assets/music-icon.png" class="icon">
         </div>
         <audio loop id="bgMusic">
-          <source src="./assets/collect-bgm.wav" type="audio/mpeg">
+          <source src="./assets/map-bgm.wav" type="audio/mpeg">
         </audio>
-      </div>
-      <!-- <div class="index">
-        <a href="../entry3/index.html"><img src="./assets/music-no-icon.png" class="icon"></a>
+      </div> -->
+      <!-- <div class="collect">
+        <a href="../entry2/index.html"><img src="./assets/music-no-icon.png" class="icon"></a>
       </div> -->
       <div class="index" id="showEgg" style="display: none;">
         <a href="javascript" onclick="return false"><img src="./assets/egg-icon.png" class="icon"></a>
       </div>
     </div>
-
     <div id="Egg-info" style="display: none;">
       <p></p>
     </div>
 
     
     <div class="name-box">
+       <!-- 显示先前输入的玩家名-->
       <p>𓍯𓂃collected by: <span id="userNameShow"></span></p>
     </div>
 
-        <!-- BOOK--start -->
-
+        <!-- 图书--start -->
+        <!-- 书的图标css和菜单的其他图标一样！消失的机制也一样。区别是额外加了旋转30度，但是位置在页面左下角-->
         <div class="book-icon" id="bookShow">
           <div onClick="showBigBook()"><img src="./assets/book-icon.png" class="icon"></div>
         </div>
@@ -118,11 +122,10 @@
           </div>
         </div>
         
-        
-        <!-- INFO -->
-        <div class="modal" draggable="true" id="showDetail" style="display: none;" ondragstart="dragStart(event)">
+        <!-- 详情 -->
+        <div class="modal" draggable="true" id="showDetail" style="display: none;">
           <div class="modal-content">
-            <div class="detail-title" id="dmTitle" style="cursor: move;">
+            <div class="detail-title" id="modalHeader" style="cursor: move;">
               <div onclick="closeDialogConmmon()" class="close-icon">●</div>
               note
             </div>
@@ -130,7 +133,7 @@
             </ul>
           </div>
         </div>
-        <!-- BOOK--end -->
+        <!-- 图书--end -->
     
      
     </main>

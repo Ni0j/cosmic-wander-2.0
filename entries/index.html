@@ -7,96 +7,114 @@
 <title>cosmic wander  *    .. *  .  </title>
 <link rel="stylesheet" href="https://use.typekit.net/dry6fcb.css">
 <link rel="icon" type="image/x-icon" href="./assets/favicon.png">
+<link rel="stylesheet" type="text/css" href="./common.css">
 <link rel="stylesheet" type="text/css" href="./reset.css">
 <link rel="stylesheet" type="text/css" href="./main.css">
 <script src="https://cdn.jsdelivr.net/gh/silvia-odwyer/pixels.js/dist/Pixels.js"></script>
 <script type="text/javascript" src="./script.js" defer></script>
-<script type="text/javascript" src="./common.js" defer></script>
+<!-- <script type="text/javascript" src="./common.js" defer></script> -->
 
 </head>
 
 <body>
-    <main>
+  <main>
+    <div id="mainHtml">
       <div class="head"> *  .  . *       *    .        .        .   *    ..*  .  . *       *    .        .        .   *    .. *  .  . *       *    .        .        .   *    ..*  .  . *       *    .        .        .   *    .. *  .  . *       *    .        .        .   *    ..*  .  . *       *    .        .        .   *    .. *  .  . *       *    .        .        .   *    ..*  .  . *       *    .        .        .   *    .. *  .  . *       *    .        .        .   *    ..*  .  . *       *    .        .        .   *    .. *  .  . *       *    .        .        .   *    ..*  .  . *       *    .        .        .   *    ..</div>
-    <div class="background" id="indexHtml">
+      <div class="background" id="indexHtml">
+        <video src="./assets/bgvideo3.mp4" autoplay muted loop></video>
+      </div>
+      <!-- 可以让这个title移动的位置再随机一点嘛，和dvd屏保那种一样-->
+      <div class="title" id="title">
+        <p class="welcome">Welcome to...</p>
+        <!-- 点击名字后出现intro- container1111-->
+        <p class="name" id="name" >COSMIC WANDER</p>
+      </div>
+  
+      <!-- 点击名字后出现intro- container；先显示这部分内容1111-->
+      <div class="intro-container" id="introContainerShow" style="display: none">
+        <p class="guide">Hello to the person (presumably) in front of the screen. This is a space different from the world you are in - a mini imaginary universe in an electronic device.<br><br>
+          You don't have a mission or a goal, you can just enter it and look around, or you can collect some meteorites around "Earth". These meteorites will be deposited in your inter-dimensional warehouse, and hopefully you'll have a relaxing time in a space that's completely different from the one you're surrounded by. 🤍</p>
+          <div class="button-container">
+            <!-- 点击下面这个button后显示下方的intro-container的内容，原本的消失1111-->
+          <button id="btnFlip" class="flip">⟢</button>
+          </div>
+      </div>
+  
+  
+      <!-- 点击button flip后出现下面这部分内容1111-->
+      <div class="intro-container" id="introContainerShow2" style="display: none">
+        <p class="guide">Before we begin, please enter a word or phrase that represents you, a place, an object, a concept, or anything else that comes to mind...</p>
+        <!-- 1.必须输入内容才能继续，如果没输入就点击下面的button，就会弹警告说请输入； 2.最多输入12字符，可以输入任何字符，超出12个会弹error 1111-->
+        <input id="inputContent" class="input-id" type="text" placeholder="[ neym ] "></input>
+         <!-- 点击button enter后跳转到entry1 1111-->
+        <button class="enter" id="btnGo">⟢</button>
+      </div>
+  
+      <!-- 这部分为彩蛋，隐藏文本，点击后会记住点击过，总共有7个，检测到点击完全部7个后(不计顺序），所有entry1-3的左侧menu多出一个名为egg-icon.png-->
+      <div class="float-text one" onClick="clickEgg('one')">“Tonight, humanity will attempt to break through quarks...”</div>
+      <div class="float-text two" onClick="clickEgg('two')">“...A beam of white light pierced through the window, ...,
+        the entire night sky had turned milky white...”</div>
+      <div class="float-text three" onClick="clickEgg('three')">“..., over the vast desert, a milky white sky emitting a soft white light, resembling an ocean of milk, ...”</div>
+  
+      <!-- 下面这个div改为音乐的图标，初始显示没有音乐，点击后切换图标到（music-icon.png）并播放bgm一直单曲循环，对应音乐文件：map-bgm.wav(没有放到html里)再次点击暂停当前音乐，并记录暂停位置，图标切换为没有音乐，再次点击继续从上次暂停的地方播放，图标也切换-->
+      <!-- 和entry1 3的菜单样式一样，只不过只有music的图标，在左上角-->
+      <div class="menu" id="menuShow">
+        <div>
+          <div id="musicPlayMain" onclick="music('play', 'Main')"><img src="./assets/music-no-icon.png" class="icon"></div>
+          <div id="musicPauseMain" style="display: none;" onclick="music('pause', 'Main')"><img src="./assets/music-icon.png" class="icon"></div>
+          <audio loop id="bgMusicMain">
+            <source src="./assets/homepage-bgm.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+    </div>
+    <div id="otherHtml">
+      <iframe id="iframe1" class="page1" style="display: none;" src="./entry1/index.html"></iframe>
+      <iframe id="iframe3" class="page1" style="display: none;" src="./entry3/index.html"></iframe>
+    </div>
+    <div class="loading" id="loading" style="display: none;">
       <video src="./assets/bgvideo3.mp4" autoplay muted loop></video>
     </div>
 
-    <div class="title" id="title">
-      <p class="welcome">Welcome to...</p>
 
-      <p class="name" id="name" >COSMIC WANDER</p>
-    </div>
-
-
-    <div class="intro-container" id="introContainerShow" style="display: none">
-      <p class="guide">Hello to the person (presumably) in front of the screen. This is a space different from the world you are in - a mini imaginary universe in an electronic device.<br><br>
-        You don't have a mission or a goal, you can just enter it and look around, or you can collect some meteorites around "Earth". These meteorites will be deposited in your inter-dimensional warehouse, and hopefully you'll have a relaxing time in a space that's completely different from the one you're surrounded by. 🤍</p>
-        <div class="button-container">
-
-        <button id="btnFlip" class="flip">⟢</button>
-        </div>
-    </div>
-
-
-
-    <div class="intro-container" id="introContainerShow2" style="display: none">
-      <p class="guide">Before we begin, please enter a word or phrase that represents you, a place, an object, a concept, or anything else that comes to mind...</p>
- 
-      <input id="inputContent" class="input-id" type="text" placeholder="[ neym ] "></input>
-
-      <button class="enter" id="btnGo">⟢</button>
-    </div>
-
- <!--Egg-->
-    <div class="float-text one" onClick="clickEgg('one')">“Tonight, humanity will attempt to break through quarks...”</div>
-    <div class="float-text two" onClick="clickEgg('two')">“...A beam of white light pierced through the window, ...,
-      the entire night sky had turned milky white...”</div>
-    <div class="float-text three" onClick="clickEgg('three')">“..., over the vast desert, a milky white sky emitting a soft white light, resembling an ocean of milk, ...”</div>
-
-
-    <div class="menu" id="menuShow">
+     <!-- 菜单，初始显示，隔30后没有触碰就渐隐消失，然后再次hover后再出现，然后重复-->
+     <div class="menu" id="menuShowAll" style="display: none;">
+      <div class="back">
+        <div href="javascript" onclick="showMain()"><img src="./entry1/assets/home-icon.png" class="icon"></div>
+      </div>
+      <div class="map">
+        <div href="javascript" onclick="goPages('1')"><img src="./entry1/assets/map-icon.png" class="icon"></div>
+      </div>
+      
+      <div class="index">
+        <div href="javascript" onclick="goPages('3')"><img src="./entry1/assets/collect-icon.png" class="icon"></div>
+      </div>
+      <!-- 下面这个div改为音乐的图标，初始显示没有音乐，点击后切换图标到（music-icon.png）并播放bgm一直单曲循环，对应音乐文件：map-bgm.wav(没有放到html里)再次点击暂停当前音乐，并记录暂停位置，图标切换为没有音乐，再次点击继续从上次暂停的地方播放，图标也切换-->
       <div>
-        <div id="musicPlay" onclick="music('play')"><img src="./assets/music-no-icon.png" class="icon"></div>
-        <div id="musicPause" style="display: none;" onclick="music('pause')"><img src="./assets/music-icon.png" class="icon"></div>
+        <div id="musicPlay" onclick="music('play', '')"><img src="./entry1/assets/music-no-icon.png" class="icon"></div>
+        <div id="musicPause" style="display: none;" onclick="music('pause', '')"><img src="./entry1/assets/music-icon.png" class="icon">
+        </div>
         <audio loop id="bgMusic">
-          <source src="./assets/homepage-bgm.mp3" type="audio/mpeg">
+          <source src="./entry1/assets/map-bgm.wav" type="audio/mpeg">
         </audio>
       </div>
-    </div>
-
-
-    <iframe id="iframe1" class="hidden-page1" src="./entry1/index.html"></iframe>
-
-    </main>
-
-
-
+      <!-- <div class="collect">
+        <a href="../entry2/index.html"><img src="./assets/music-no-icon.png" class="icon"></a>
+      </div> -->
+      <!-- <div class="index" id="showEgg" style="display: none;">
+        <a href="javascript" onclick="return false"><img src="./entry1/assets/egg-icon.png" class="icon"></a>
+      </div> -->
+  </main>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script>
+  // const loading = {
+  //   container: document.querySelector("loading"),
+  //   out() {
+  //     this.container.classList.add("loading-small")
+  //   }
+  // };
+  // window.addEventListener("load", () => {
+  //   loading.out();
+  // })
+</script>
 </html>
